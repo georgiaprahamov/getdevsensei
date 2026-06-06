@@ -373,7 +373,8 @@ img { display: block; max-width: 100%; }
     flex-direction: column;
     gap: 12px;
 }
-.code-editor-mock pre { margin: 0; }
+.code-editor-mock pre { margin: 0; overflow-x: auto; }
+.code-display pre { overflow-x: auto; }
 .line-num { display: inline-block; width: 22px; color: rgba(255,255,255,0.18); user-select: none; font-family: var(--font-code); }
 .error-line { background: rgba(242,63,67,0.08); border-left: 2px solid var(--red); padding-left: 4px; display: block; margin: 0 -18px; padding: 2px 18px; }
 .error-annotation {
@@ -860,44 +861,204 @@ img { display: block; max-width: 100%; }
 /* ==========================================
    16. Responsive
    ========================================== */
+
+/* ── 1024px: Tablets ─────────────────────────────────────────── */
 @media (max-width: 1024px) {
-    .grid-2 { grid-template-columns: 1fr; gap: 48px; }
+    .grid-2 { grid-template-columns: 1fr; gap: 40px; }
     .grid-3 { grid-template-columns: 1fr 1fr; gap: 20px; }
-    .hero-section { padding: 130px 0 80px; }
+    .align-center { align-items: start; }
+
+    /* Sections */
+    .hero-section { padding: 120px 0 72px; }
+    .stats-section { padding: 52px 0; }
+    .problem-section,
+    .features-section,
+    .simulator-section,
+    .how-it-works-section { padding: 72px 0; }
+    .cta-section { padding: 72px 0 90px; }
+    .section-header { margin-bottom: 48px; }
+
+    /* Hero */
     .hero-container { grid-template-columns: 1fr; }
+    .hero-subtitle { max-width: 100%; }
+    .vscode-frame { aspect-ratio: 16 / 9; }
+
+    /* Stats */
+    .stat-card { padding: 0 28px; }
+
+    /* Mini feature grid stays 2-col on tablet */
+    .features-mini-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Feature cards */
+    .feature-card { padding: 28px 24px; }
+
+    /* Simulator */
     .simulator-container { grid-template-columns: 1fr; height: auto; }
-    .sim-editor-pane { height: 280px; }
-    .sim-chat-pane { height: 430px; border-left: none; border-top: 1px solid rgba(255,255,255,0.07); }
+    .sim-editor-pane { height: 260px; }
+    .sim-chat-pane {
+        height: 420px;
+        border-left: none;
+        border-top: 1px solid rgba(255,255,255,0.07);
+    }
+
+    /* Steps */
+    .step-card { padding: 30px 24px; }
+
+    /* Footer */
     .footer-container { grid-template-columns: 1fr; gap: 40px; }
-    .footer-links { justify-content: flex-start; }
-    .features-mini-grid { grid-template-columns: 1fr; }
-    .stat-card { padding: 0 32px; }
+    .footer-links { gap: 40px; }
 }
 
+/* ── 768px: Mobile ───────────────────────────────────────────── */
 @media (max-width: 768px) {
     html { font-size: 15px; }
+    .container { padding: 0 20px; }
+
+    /* Header */
     .main-nav, .header-actions { display: none; }
     .mobile-menu-btn { display: flex; }
     .main-header { height: 64px; }
     .mobile-nav { top: 64px; }
-    .hero-title { font-size: 2.4rem; letter-spacing: -1.5px; }
-    .grid-3 { grid-template-columns: 1fr; gap: 16px; }
-    .section-title { font-size: 1.9rem; }
-    .cta-box { padding: 52px 24px; }
-    .cta-title { font-size: 1.8rem; }
-    .stats-grid { gap: 0; flex-direction: column; }
-    .stat-divider-v { width: 80px; height: 1px; margin: 8px 0; }
-    .stat-card { padding: 20px 0; }
-    .footer-links { flex-direction: column; gap: 28px; }
-    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
-    .footer-bottom-links { gap: 16px; }
-    .hero-buttons { flex-direction: column; }
+
+    /* Typography */
+    .hero-title { font-size: clamp(1.9rem, 7.5vw, 2.6rem); letter-spacing: -1px; }
+    .hero-subtitle { font-size: 1rem; }
+    .section-title { font-size: clamp(1.6rem, 6vw, 2rem); }
+
+    /* Sections */
+    .hero-section { padding: 100px 0 56px; }
+    .stats-section { padding: 44px 0; }
+    .problem-section,
+    .features-section,
+    .simulator-section,
+    .how-it-works-section { padding: 56px 0; }
+    .cta-section { padding: 52px 0 68px; }
+    .section-header { margin-bottom: 36px; }
+
+    /* Grids */
+    .grid-2 { gap: 32px; }
+    .grid-3 { grid-template-columns: 1fr; gap: 14px; }
+    .features-mini-grid { grid-template-columns: 1fr; gap: 12px; }
+
+    /* Hero */
+    .hero-content .badge { margin-bottom: 20px; }
+    .hero-buttons { flex-direction: column; gap: 12px; }
     .hero-buttons .btn { width: 100%; justify-content: center; }
+    .trust-row { gap: 14px; flex-wrap: wrap; }
+    /* Hide the VS Code sidebar in the hero frame on phones */
+    .vscode-sidebar { display: none; }
+    .code-editor-mock { flex: 1; font-size: 0.8rem; padding: 14px; }
+    .vscode-frame { aspect-ratio: 16 / 8; }
+
+    /* Stats */
+    .stats-grid { flex-direction: column; gap: 0; }
+    .stat-divider-v { width: 48px; height: 1px; margin: 6px 0; }
+    .stat-card { padding: 14px 0; }
+    .testimonial-strip { padding: 20px 18px; }
+    .testimonial-quote { font-size: 1rem; }
+
+    /* Mini cards */
+    .mini-card { padding: 18px; gap: 12px; }
+    .mini-icon { width: 38px; height: 38px; flex-shrink: 0; }
+    .mini-card h4 { font-size: 0.9rem; }
+
+    /* Feature cards */
+    .feature-card { padding: 22px 20px; }
+    .feature-icon-wrap { width: 44px; height: 44px; margin-bottom: 14px; }
+    .feature-card-title { font-size: 1.05rem; }
+
+    /* Simulator */
+    .simulator-container { border-radius: var(--radius-lg); }
+    .sim-editor-pane { height: 210px; }
+    .sim-chat-pane { height: 360px; }
+    .code-display { padding: 14px; font-size: 0.82rem; }
+    .chat-messages { padding: 14px; gap: 14px; }
+    .chat-options-area { padding: 12px 14px; gap: 6px; }
+    .chat-option-btn { font-size: 0.82rem; padding: 9px 12px; }
+    .msg-text { font-size: 0.84rem; padding: 10px 13px; }
+
+    /* Steps */
+    .step-card { padding: 24px 20px; }
+    .step-num { font-size: 2.5rem; margin-bottom: 12px; }
+
+    /* CTA */
+    .cta-box { padding: 44px 22px; border-radius: var(--radius-xl); }
+    .cta-title { font-size: clamp(1.5rem, 6vw, 1.9rem); }
+    .cta-desc { font-size: 0.97rem; margin-bottom: 30px; }
+    .cta-buttons { flex-direction: column; align-items: stretch; gap: 12px; }
+    .cta-buttons .btn { width: 100%; justify-content: center; }
+
+    /* Footer */
+    .footer-links { flex-direction: column; gap: 24px; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .footer-bottom-links { gap: 14px; flex-wrap: wrap; }
+    .main-footer { padding: 52px 0 28px; }
 }
 
-@media (max-width: 420px) {
-    .container { padding: 0 18px; }
-    .cta-buttons { flex-direction: column; align-items: center; }
+/* ── 640px: Small phones ─────────────────────────────────────── */
+@media (max-width: 640px) {
+    /* Stats: switch to 2×2 pill grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1px;
+        background: rgba(255,255,255,0.06);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        margin-bottom: 0;
+    }
+    .stat-card {
+        background: var(--bg-card);
+        padding: 20px 12px;
+        flex-direction: column;
+    }
+    .stat-divider-v { display: none; }
+
+    /* VS Code frame: fixed height so it doesn't collapse */
+    .vscode-frame { aspect-ratio: unset; height: 200px; }
+    .error-annotation { display: none; } /* too cramped */
+
+    /* Simulator */
+    .sim-editor-pane { height: 190px; }
+    .sim-chat-pane { height: 320px; }
+    .code-display { font-size: 0.78rem; }
+
+    /* Hide problem section image on tiny screens */
+    .problem-image-wrap { display: none; }
+
+    /* Badges */
+    .badge { font-size: 0.76rem; padding: 5px 11px; }
+
+    /* Buttons */
+    .btn-lg { padding: 14px 26px; font-size: 0.95rem; }
+
+    /* Testimonial */
+    .testimonial-strip { border-radius: var(--radius-md); }
+}
+
+/* ── 400px: Very small phones ────────────────────────────────── */
+@media (max-width: 400px) {
+    html { font-size: 14px; }
+    .container { padding: 0 16px; }
+    .hero-title { letter-spacing: -0.5px; }
+
+    /* Stats back to column on tiny screens */
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+        background: transparent;
+        border-radius: 0;
+        overflow: visible;
+    }
+    .stat-card { background: transparent; padding: 10px 0; }
+    .stat-divider-v { display: block; width: 36px; height: 1px; margin: 2px 0; }
+
+    .vscode-frame { height: 170px; }
+    .sim-editor-pane { height: 170px; }
+    .sim-chat-pane { height: 290px; }
+    .chat-option-btn { font-size: 0.78rem; }
+    .cta-box { padding: 36px 16px; }
+    .mobile-nav { padding: 20px 16px; }
 }
 
 /* ── kbd key badges ──────────────────────────────────────────── */
