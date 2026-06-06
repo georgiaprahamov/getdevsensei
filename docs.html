@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevSENSEI | Documentation</title>
+    <meta name="description" content="Full technical documentation and user guide for the DevSENSEI VS Code extension.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+    <style>
+        .docs-layout { padding: 120px 0 100px; }
+        .docs-grid {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        .docs-sidebar {
+            position: sticky;
+            top: 100px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+        }
+        .docs-sidebar-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .docs-nav-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+        .docs-nav-link {
+            display: block;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            padding: 8px 12px;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+        .docs-nav-link:hover, .docs-nav-link.active {
+            color: var(--text-white);
+            background: rgba(88,101,242,0.12);
+            padding-left: 16px;
+        }
+        .docs-nav-link.active { color: #A78BFA; }
+        .docs-nav-group { margin-top: 20px; }
+        .docs-nav-group-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            padding: 0 12px;
+            margin-bottom: 4px;
+            margin-top: 8px;
+        }
+        .docs-panel {
+            background: var(--bg-card);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-lg);
+            padding: 52px;
+        }
+        .docs-section {
+            margin-bottom: 64px;
+            scroll-margin-top: 110px;
+        }
+        .docs-section:last-child { margin-bottom: 0; }
+        .docs-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .docs-section h3 { font-size: 1.15rem; margin: 28px 0 12px; color: var(--text-white); }
+        .docs-section p { color: var(--text-normal); margin-bottom: 16px; font-size: 1rem; line-height: 1.7; }
+        .docs-section ul, .docs-section ol {
+            color: var(--text-normal);
+            margin: 0 0 16px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            font-size: 1rem;
+            line-height: 1.65;
+        }
+        .alert-box {
+            background: rgba(88,101,242,0.08);
+            border-left: 3px solid var(--blurple);
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            padding: 16px 20px;
+            margin: 20px 0;
+            font-size: 0.95rem;
+            color: var(--text-normal);
+        }
+        .alert-box.green { background: rgba(35,165,90,0.08); border-color: var(--green); }
+        .alert-box.yellow { background: rgba(240,178,50,0.08); border-color: var(--yellow); }
+        .alert-box p { margin: 0; }
+        .docs-table-wrap {
+            overflow-x: auto;
+            margin: 20px 0;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .docs-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
+        .docs-table th, .docs-table td { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .docs-table th { background: rgba(0,0,0,0.25); color: var(--text-white); font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .docs-table tr:last-child td { border-bottom: none; }
+        .docs-table code { color: #50FA7B; }
+        .docs-table td { color: var(--text-normal); }
+        kbd {
+            display: inline-block;
+            background: var(--grey);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-bottom-width: 3px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: var(--font-code);
+            font-size: 0.82em;
+            color: var(--text-white);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.5);
+            margin: 0 2px;
+        }
+        .step-inline {
+            display: flex;
+            gap: 18px;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+        .step-inline-num {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: rgba(88,101,242,0.15);
+            border: 1px solid rgba(88,101,242,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-heading);
+            font-weight: 700; font-size: 0.85rem;
+            color: #A78BFA;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .step-inline-body { flex: 1; }
+        .step-inline-body strong { display: block; color: var(--text-white); margin-bottom: 4px; font-size: 1rem; }
+        .step-inline-body p { margin: 0; font-size: 0.93rem; }
+        .faq-item { margin-bottom: 28px; }
+        .faq-item h3 { margin-top: 0; }
+        .anchor-link {
+            opacity: 0;
+            margin-left: 8px;
+            font-size: 0.75em;
+            color: var(--blurple);
+            font-family: var(--font-code);
+            font-weight: 400;
+            transition: opacity 0.2s;
+            text-decoration: none;
+            vertical-align: middle;
+        }
+        .docs-section h2:hover .anchor-link { opacity: 1; }
+        @media (max-width: 1024px) {
+            .anchor-link { opacity: 0.4; }
+        }
+        @media (max-width: 1024px) {
+            .docs-grid { grid-template-columns: 1fr; }
+            .docs-sidebar { position: relative; top: 0; }
+            .docs-panel { padding: 28px 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header" id="main-header">
+        <div class="container header-container">
+            <a href="index.html" class="logo-area">
+                <img src="assets/logo.png" alt="DevSENSEI Logo" class="brand-logo">
+                <span class="brand-name">Dev<span class="highlight-text">SENSEI</span></span>
+            </a>
+            <div class="header-actions">
+                <a href="https://discord.gg/PtRqsBrBsg" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="margin-right:10px">
+                    Support
+                </a>
+                <a href="index.html" class="btn btn-primary btn-sm">← Back to site</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="docs-layout">
+        <div class="container docs-grid">
+
+            <aside class="docs-sidebar">
+                <p class="docs-sidebar-title">Documentation</p>
+                <ul class="docs-nav-list">
+                    <li><a href="#overview" class="docs-nav-link active">Overview</a></li>
+                    <li><a href="#installation" class="docs-nav-link">Installation</a></li>
+                    <li><a href="#configuration" class="docs-nav-link">Configuration</a></li>
+                    <li><a href="#shortcuts" class="docs-nav-link">Keyboard Shortcuts</a></li>
+                    <li><a href="#usage" class="docs-nav-link">Usage Guide</a></li>
+                    <li><a href="#mentorship-modes" class="docs-nav-link">Mentorship Modes</a></li>
+                    <li><a href="#faq" class="docs-nav-link">FAQ</a></li>
+                </ul>
+                <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
+                    <p class="docs-nav-group-label" style="padding:0; margin-bottom: 12px;">Links</p>
+                    <a href="https://marketplace.visualstudio.com/items?itemName=georgi-aprahamov-devsensei.devsensei" target="_blank" rel="noopener noreferrer" class="docs-nav-link" style="font-size:0.82rem">VS Code Marketplace ↗</a>
+                    <a href="https://open-vsx.org/extension/georgi-aprahamov-devsensei/devsensei" target="_blank" rel="noopener noreferrer" class="docs-nav-link" style="font-size:0.82rem">Open VSX Registry ↗</a>
+                    <a href="https://discord.gg/PtRqsBrBsg" target="_blank" rel="noopener noreferrer" class="docs-nav-link" style="font-size:0.82rem">Discord Support ↗</a>
+                    <a href="privacy.html" class="docs-nav-link" style="font-size:0.82rem">Privacy Policy</a>
+                </div>
+            </aside>
+
+            <article class="docs-panel">
+
+                <!-- Overview -->
+                <section class="docs-section" id="overview">
+                    <h2>🧠 Overview <a href="#overview" class="anchor-link" aria-label="Link to Overview">#</a></h2>
+                    <p>
+                        <strong>DevSENSEI</strong> is an AI-powered Socratic coding mentor built directly into Visual Studio Code. Instead of generating copy-paste solutions, it guides you through targeted questions and hints — helping you understand <em>why</em> something is wrong, not just what to change.
+                    </p>
+                    <p>
+                        It draws on the Socratic Method: a dialogue-based approach that builds lasting understanding by encouraging you to discover the answer yourself.
+                    </p>
+                    <div class="alert-box">
+                        <p><strong>💡 Why Socratic?</strong> Research consistently shows that self-discovery of errors leads to deeper knowledge retention and builds the kind of critical engineering thinking that differentiates great developers.</p>
+                    </div>
+
+                    <h3>Key Capabilities</h3>
+                    <ul>
+                        <li><strong>Guided Debugging</strong> — pinpoints logical errors through leading questions rather than giving direct answers</li>
+                        <li><strong>Intelligent Logic Auditing</strong> — analyses your code's control flow and surface surprising edge cases</li>
+                        <li><strong>Architectural Advice</strong> — discusses design trade-offs and suggests structural improvements</li>
+                        <li><strong>Real-time Streaming</strong> — responses appear token-by-token via SSE with zero perceived latency</li>
+                        <li><strong>Context Awareness</strong> — understands the selected code block and surrounding file context</li>
+                    </ul>
+                </section>
+
+                <!-- Installation -->
+                <section class="docs-section" id="installation">
+                    <h2>🚀 Installation <a href="#installation" class="anchor-link" aria-label="Link to Installation">#</a></h2>
+                    <p>DevSENSEI can be installed from either the VS Code Marketplace or the Open VSX Registry (for VS Codium / other editors).</p>
+
+                    <h3>Option A — VS Code Marketplace (recommended)</h3>
+                    <div class="step-inline">
+                        <div class="step-inline-num">1</div>
+                        <div class="step-inline-body">
+                            <strong>Open the Extensions panel</strong>
+                            <p>Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd> (Windows/Linux) or <kbd>Cmd</kbd>+<kbd>Shift</kbd>+<kbd>X</kbd> (macOS) inside VS Code.</p>
+                        </div>
+                    </div>
+                    <div class="step-inline">
+                        <div class="step-inline-num">2</div>
+                        <div class="step-inline-body">
+                            <strong>Search for DevSENSEI</strong>
+                            <p>Type <strong>DevSENSEI</strong> in the search box and look for the extension published by <em>georgeaprahamov</em>.</p>
+                        </div>
+                    </div>
+                    <div class="step-inline">
+                        <div class="step-inline-num">3</div>
+                        <div class="step-inline-body">
+                            <strong>Click Install</strong>
+                            <p>The extension activates immediately. No restart required, no API key needed to start.</p>
+                        </div>
+                    </div>
+
+                    <p style="margin-top:8px">
+                        <a href="https://marketplace.visualstudio.com/items?itemName=georgi-aprahamov-devsensei.devsensei" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Open VS Code Marketplace ↗</a>
+                    </p>
+
+                    <h3>Option B — Open VSX Registry</h3>
+                    <p>For VS Codium, Gitpod, Eclipse Theia, or any editor that uses Open VSX:</p>
+                    <p>
+                        <a href="https://open-vsx.org/extension/georgi-aprahamov-devsensei/devsensei" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">Open VSX Registry ↗</a>
+                    </p>
+
+                    <div class="alert-box green">
+                        <p><strong>Zero-config start:</strong> DevSENSEI ships with a built-in fallback API key so you can start mentoring sessions immediately after install, with no account sign-up.</p>
+                    </div>
+                </section>
+
+                <!-- Configuration -->
+                <section class="docs-section" id="configuration">
+                    <h2>⚙️ Configuration <a href="#configuration" class="anchor-link" aria-label="Link to Configuration">#</a></h2>
+                    <p>
+                        Open VS Code Settings (<kbd>Ctrl</kbd>+<kbd>,</kbd> / <kbd>Cmd</kbd>+<kbd>,</kbd>) and search for <strong>DevSENSEI</strong> to see all options. You can also edit <code>settings.json</code> directly.
+                    </p>
+
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr>
+                                    <th>Setting</th>
+                                    <th>Type</th>
+                                    <th>Default</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>devsensei.mistralApiKey</code></td>
+                                    <td>string</td>
+                                    <td><em>empty (built-in)</em></td>
+                                    <td>Your personal Mistral AI API key. Leave empty to use the built-in fallback key.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>devsensei.mistralModel</code></td>
+                                    <td>enum</td>
+                                    <td><code>codestral-latest</code></td>
+                                    <td>The AI model that powers responses. Options: <code>codestral-latest</code>, <code>mistral-large-latest</code>.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>devsensei.language</code></td>
+                                    <td>enum</td>
+                                    <td><code>auto</code></td>
+                                    <td>Conversation language: <code>auto</code> (detect from your message), <code>en</code> (English), <code>bg</code> (Bulgarian).</td>
+                                </tr>
+                                <tr>
+                                    <td><code>devsensei.maxHistory</code></td>
+                                    <td>number</td>
+                                    <td><code>15</code></td>
+                                    <td>Maximum chat messages kept in context. Higher values = richer context, more tokens used.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>devsensei.mentorshipLevel</code></td>
+                                    <td>enum</td>
+                                    <td><code>strict</code></td>
+                                    <td>Teaching style: <code>strict</code> (pure Socratic hints), <code>balanced</code> (hints + occasional hints), <code>direct</code> (direct answers with explanations).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Example settings.json snippet</h3>
+                    <pre style="background:var(--bg);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius-md);padding:20px;font-family:var(--font-code);font-size:0.88rem;color:var(--text-normal);overflow-x:auto;line-height:1.6">{
+  <span style="color:#A78BFA">"devsensei.mistralApiKey"</span>: <span style="color:#F1FA8C">"your-key-here"</span>,
+  <span style="color:#A78BFA">"devsensei.mentorshipLevel"</span>: <span style="color:#F1FA8C">"balanced"</span>,
+  <span style="color:#A78BFA">"devsensei.language"</span>: <span style="color:#F1FA8C">"en"</span>,
+  <span style="color:#A78BFA">"devsensei.maxHistory"</span>: <span style="color:#BD93F9">20</span>
+}</pre>
+                </section>
+
+                <!-- Keyboard Shortcuts -->
+                <section class="docs-section" id="shortcuts">
+                    <h2>⌨️ Keyboard Shortcuts <a href="#shortcuts" class="anchor-link" aria-label="Link to Keyboard Shortcuts">#</a></h2>
+                    <p>DevSENSEI registers a global keybinding that opens the mentor panel with the currently selected code pre-loaded.</p>
+
+                    <div class="docs-table-wrap" style="max-width:460px">
+                        <table class="docs-table">
+                            <thead>
+                                <tr><th>OS</th><th>Shortcut</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>🍏 <strong>macOS</strong></td>
+                                    <td><kbd>Cmd</kbd>+<kbd>Option</kbd>+<kbd>A</kbd></td>
+                                </tr>
+                                <tr>
+                                    <td>💻 <strong>Windows / Linux</strong></td>
+                                    <td><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Rebinding the shortcut</h3>
+                    <p>Open the VS Code Keyboard Shortcuts editor (<kbd>Ctrl</kbd>+<kbd>K</kbd> <kbd>Ctrl</kbd>+<kbd>S</kbd>), search for <strong>devsensei.askMentor</strong>, and assign any key combination you prefer.</p>
+
+                    <h3>Context menu</h3>
+                    <p>Right-click on any selected code block in the editor. You will see <strong>"Ask DevSENSEI"</strong> in the context menu as an alternative to the keyboard shortcut.</p>
+                </section>
+
+                <!-- Usage Guide -->
+                <section class="docs-section" id="usage">
+                    <h2>📖 Usage Guide <a href="#usage" class="anchor-link" aria-label="Link to Usage Guide">#</a></h2>
+
+                    <div class="step-inline">
+                        <div class="step-inline-num">1</div>
+                        <div class="step-inline-body">
+                            <strong>Select your code</strong>
+                            <p>Highlight any snippet in your editor — a function, a loop, a class, or even a single suspicious line.</p>
+                        </div>
+                    </div>
+                    <div class="step-inline">
+                        <div class="step-inline-num">2</div>
+                        <div class="step-inline-body">
+                            <strong>Invoke the mentor</strong>
+                            <p>Press <kbd>Cmd</kbd>+<kbd>Option</kbd>+<kbd>A</kbd> (macOS) / <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>A</kbd> (Windows), or right-click and choose <strong>Ask DevSENSEI</strong>.</p>
+                        </div>
+                    </div>
+                    <div class="step-inline">
+                        <div class="step-inline-num">3</div>
+                        <div class="step-inline-body">
+                            <strong>Engage in dialogue</strong>
+                            <p>The side panel opens with your code pre-loaded. DevSENSEI starts with a focused question. Type your thoughts freely in the input box and work toward the solution together.</p>
+                        </div>
+                    </div>
+                    <div class="step-inline">
+                        <div class="step-inline-num">4</div>
+                        <div class="step-inline-body">
+                            <strong>Apply your understanding</strong>
+                            <p>Once you've identified the issue through dialogue, fix your code. DevSENSEI can then verify your solution or explore related edge cases.</p>
+                        </div>
+                    </div>
+
+                    <div class="alert-box yellow">
+                        <p><strong>Tip:</strong> The more honest your responses to the mentor's questions, the more accurately it can detect your exact knowledge gap and give you precisely targeted guidance.</p>
+                    </div>
+                </section>
+
+                <!-- Mentorship Modes -->
+                <section class="docs-section" id="mentorship-modes">
+                    <h2>🎓 Mentorship Modes <a href="#mentorship-modes" class="anchor-link" aria-label="Link to Mentorship Modes">#</a></h2>
+                    <p>DevSENSEI offers three distinct modes to match your current needs. Switch at any time via <code>devsensei.mentorshipLevel</code> in settings.</p>
+
+                    <div class="docs-table-wrap">
+                        <table class="docs-table">
+                            <thead>
+                                <tr><th>Mode</th><th>Behaviour</th><th>Best for</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>strict</code></td>
+                                    <td>Only asks questions. Never reveals the answer directly. Pure Socratic dialogue.</td>
+                                    <td>Learning new concepts, deliberate practice, interview preparation.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>balanced</code></td>
+                                    <td>Asks guiding questions but provides partial hints when you're stuck.</td>
+                                    <td>Day-to-day debugging, unfamiliar codebases.</td>
+                                </tr>
+                                <tr>
+                                    <td><code>direct</code></td>
+                                    <td>Gives direct answers with explanations. Minimal back-and-forth.</td>
+                                    <td>Tight deadlines, reviewing code you wrote long ago.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- FAQ -->
+                <section class="docs-section" id="faq">
+                    <h2>❓ FAQ <a href="#faq" class="anchor-link" aria-label="Link to FAQ">#</a></h2>
+
+                    <div class="faq-item">
+                        <h3>Is DevSENSEI completely free?</h3>
+                        <p>Yes. Install and use it for free. The built-in fallback API key gets you started with no sign-up. For unlimited or higher-volume usage, provide your own <a href="https://console.mistral.ai" target="_blank" rel="noopener noreferrer" style="color:var(--blurple)">Mistral AI API key</a> in settings.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>Which programming languages are supported?</h3>
+                        <p>DevSENSEI is language-agnostic. It works with JavaScript, TypeScript, Python, Rust, Go, C++, Java, C#, PHP, Ruby, HTML/CSS, SQL, and any other language Mistral's models understand — which is essentially all mainstream languages.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>What if I'm stuck and just need the answer?</h3>
+                        <p>Change <code>devsensei.mentorshipLevel</code> to <code>direct</code> in settings. This switches the mentor to a more traditional Q&A mode while still providing explanations alongside the answer.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>Is my code sent to any third-party servers?</h3>
+                        <p>Selected code snippets are sent to Mistral AI's API to generate responses. No code is stored or logged by DevSENSEI itself. See our <a href="privacy.html" style="color:var(--blurple)">Privacy Policy</a> and <a href="https://mistral.ai/privacy" target="_blank" rel="noopener noreferrer" style="color:var(--blurple)">Mistral AI Privacy Policy</a> for full details.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>How do I report a bug or request a feature?</h3>
+                        <p>Join our <a href="https://discord.gg/PtRqsBrBsg" target="_blank" rel="noopener noreferrer" style="color:var(--blurple)">Discord server</a> to report issues, suggest features, or get direct support from the team.</p>
+                    </div>
+
+                    <div class="faq-item">
+                        <h3>Does DevSENSEI work offline?</h3>
+                        <p>No — DevSENSEI requires an internet connection to reach the Mistral AI API and generate responses. There is no local inference mode at this time.</p>
+                    </div>
+                </section>
+
+            </article>
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container footer-bottom">
+            <p>DevSENSEI &copy; 2026. Designed with precision by georgeaprahamov.</p>
+            <div class="footer-bottom-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="https://discord.gg/PtRqsBrBsg" target="_blank" rel="noopener noreferrer">Support</a>
+                <a href="index.html">Home</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cookies.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.docs-section');
+            const links = document.querySelectorAll('.docs-nav-link');
+
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        links.forEach(l => l.classList.remove('active'));
+                        const active = document.querySelector(`.docs-nav-link[href="#${entry.target.id}"]`);
+                        active?.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-30% 0px -60% 0px' });
+
+            sections.forEach(s => observer.observe(s));
+
+            links.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    const el = document.querySelector(link.getAttribute('href'));
+                    el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+
+            const header = document.getElementById('main-header');
+            window.addEventListener('scroll', () => {
+                header.style.background = window.scrollY > 40
+                    ? 'rgba(11,12,16,0.97)'
+                    : 'rgba(11,12,16,0.75)';
+            }, { passive: true });
+        });
+    </script>
+</body>
+</html>
