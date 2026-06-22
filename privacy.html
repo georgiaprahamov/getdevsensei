@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
     <style>
-        .policy-layout { padding: 130px 0 100px; }
+        .policy-layout { padding: 130px 0 100px; background: var(--bg-gray); }
         .policy-grid {
             display: grid;
             grid-template-columns: 240px 1fr;
@@ -21,10 +21,11 @@
         .policy-sidebar {
             position: sticky;
             top: 100px;
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: var(--radius-lg);
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 24px;
+            box-shadow: var(--shadow-sm);
         }
         .policy-sidebar-title {
             font-size: 0.72rem;
@@ -33,32 +34,33 @@
             color: var(--text-muted);
             margin-bottom: 14px;
             padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid var(--border-color);
         }
         .policy-nav-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
         .policy-nav-link {
             display: block;
-            color: var(--text-muted);
+            color: var(--text-body);
             font-size: 0.87rem;
             padding: 7px 12px;
-            border-radius: var(--radius-sm);
+            border-radius: 6px;
             transition: all 0.2s;
             line-height: 1.4;
         }
         .policy-nav-link:hover, .policy-nav-link.active {
-            color: var(--text-white);
-            background: rgba(88,101,242,0.1);
+            color: var(--purple);
+            background: var(--purple-light);
             padding-left: 16px;
         }
-        .policy-nav-link.active { color: #A78BFA; }
+        .policy-nav-link.active { font-weight: 600; }
         .policy-panel {
-            background: var(--bg-card);
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: var(--radius-lg);
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
             padding: 52px;
+            box-shadow: var(--shadow-sm);
         }
-        .policy-header { margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-        .policy-header h1 { font-size: 2.2rem; margin-bottom: 10px; }
+        .policy-header { margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid var(--border-color); }
+        .policy-header h1 { font-size: 2.2rem; margin-bottom: 10px; color: var(--text-dark); }
         .policy-meta { color: var(--text-muted); font-size: 0.88rem; display: flex; gap: 20px; flex-wrap: wrap; }
         .policy-section { margin-bottom: 56px; scroll-margin-top: 110px; }
         .policy-section:last-child { margin-bottom: 0; }
@@ -66,42 +68,44 @@
             font-size: 1.4rem;
             margin-bottom: 16px;
             padding-bottom: 10px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
+            border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             gap: 10px;
+            color: var(--text-dark);
         }
-        .policy-section h3 { font-size: 1.05rem; margin: 24px 0 10px; color: var(--text-white); }
-        .policy-section p { color: var(--text-normal); margin-bottom: 14px; font-size: 0.97rem; line-height: 1.75; }
+        .policy-section h3 { font-size: 1.05rem; margin: 24px 0 10px; color: var(--text-dark); }
+        .policy-section p { color: var(--text-body); margin-bottom: 14px; font-size: 0.97rem; line-height: 1.75; }
         .policy-section ul {
-            color: var(--text-normal);
+            color: var(--text-body);
             margin: 0 0 16px 24px;
             display: flex; flex-direction: column;
             gap: 8px;
             font-size: 0.97rem;
             line-height: 1.65;
         }
-        .policy-section a { color: var(--blurple); }
+        .policy-section a { color: var(--purple); }
         .policy-section a:hover { text-decoration: underline; }
         .highlight-box {
-            background: rgba(88,101,242,0.07);
-            border: 1px solid rgba(88,101,242,0.18);
-            border-radius: var(--radius-md);
+            background: var(--purple-light);
+            border: 1px solid rgba(99, 75, 255, 0.2);
+            border-radius: 8px;
             padding: 20px 24px;
             margin: 20px 0;
+            color: var(--text-body);
         }
         .highlight-box p { margin: 0; font-size: 0.95rem; }
         .data-table-wrap {
             overflow-x: auto;
             margin: 20px 0;
-            border-radius: var(--radius-md);
-            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
         .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; text-align: left; }
-        .data-table th, .data-table td { padding: 13px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .data-table th { background: rgba(0,0,0,0.25); color: var(--text-white); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; }
+        .data-table th, .data-table td { padding: 13px 18px; border-bottom: 1px solid var(--border-color); }
+        .data-table th { background: var(--bg-gray); color: var(--text-dark); font-weight: 600; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; }
         .data-table tr:last-child td { border-bottom: none; }
-        .data-table td { color: var(--text-normal); }
+        .data-table td { color: var(--text-body); }
         @media (max-width: 1024px) {
             .policy-layout { padding: 100px 0 72px; }
             .policy-grid { grid-template-columns: 1fr; gap: 24px; }
@@ -132,14 +136,14 @@
 </head>
 <body>
 
-    <header class="main-header" id="main-header">
+    <header class="main-header" id="main-header" style="background: var(--bg-white); border-bottom: 1px solid var(--border-color);">
         <div class="container header-container">
             <a href="index.html" class="logo-area">
-                <img src="assets/logo.png" alt="DevSENSEI Logo" class="brand-logo">
-                <span class="brand-name">Dev<span class="highlight-text">SENSEI</span></span>
+                <img src="assets/logo_dark.png" alt="DevSENSEI Logo" class="brand-logo">
+                <span class="brand-name">Dev<span class="text-primary">SENSEI</span></span>
             </a>
             <div class="header-actions">
-                <a href="docs.html" class="btn btn-outline btn-sm" style="margin-right:10px">Documentation</a>
+                <a href="docs.html" class="btn btn-outline btn-sm">Documentation</a>
                 <a href="index.html" class="btn btn-primary btn-sm">← Back to site</a>
             </div>
         </div>
@@ -353,14 +357,14 @@
         </div>
     </main>
 
-    <footer class="main-footer">
-        <div class="container footer-bottom">
-            <p>DevSENSEI &copy; 2026. Designed with precision by georgeaprahamov.</p>
-            <div class="footer-bottom-links">
-                <a href="privacy.html">Privacy Policy</a>
-                <a href="https://discord.gg/PtRqsBrBsg" target="_blank" rel="noopener noreferrer">Support</a>
-                <a href="docs.html">Documentation</a>
-                <a href="index.html">Home</a>
+    <footer class="main-footer" style="background: white; border-top: 1px solid var(--border-color); padding: 40px 0;">
+        <div class="container footer-bottom" style="display:flex; justify-content:space-between; align-items:center;">
+            <p style="color:var(--text-muted); font-size:0.9rem;">DevSENSEI &copy; 2026. Designed with precision by georgeaprahamov.</p>
+            <div class="footer-bottom-links" style="display:flex; gap:20px;">
+                <a href="privacy.html" style="color:var(--text-muted); font-size:0.9rem;">Privacy Policy</a>
+                <a href="https://discord.gg/PtRqsBrBsg" target="_blank" rel="noopener noreferrer" style="color:var(--text-muted); font-size:0.9rem;">Support</a>
+                <a href="docs.html" style="color:var(--text-muted); font-size:0.9rem;">Documentation</a>
+                <a href="index.html" style="color:var(--text-muted); font-size:0.9rem;">Home</a>
             </div>
         </div>
     </footer>
@@ -391,9 +395,14 @@
 
             const header = document.getElementById('main-header');
             window.addEventListener('scroll', () => {
-                header.style.background = window.scrollY > 40
-                    ? 'rgba(11,12,16,0.97)'
-                    : 'rgba(11,12,16,0.75)';
+                if (!header) return;
+                if (window.scrollY > 40) {
+                    header.style.background = 'rgba(255, 255, 255, 0.98)';
+                    header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.05)';
+                } else {
+                    header.style.background = 'var(--bg-white)';
+                    header.style.boxShadow = 'none';
+                }
             }, { passive: true });
         });
     </script>
